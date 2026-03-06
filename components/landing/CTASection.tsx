@@ -32,6 +32,13 @@ export default function CTASection() {
     }
     setErrors({});
     setStatus('loading');
+
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      setStatus('error');
+      return;
+    }
+
     const { error } = await supabase.from('leads').insert([form]);
     if (error) {
       setStatus('error');
@@ -39,6 +46,7 @@ export default function CTASection() {
       setStatus('success');
       setForm({ nome: '', email: '', messaggio: '' });
     }
+
   };
 
   return (
